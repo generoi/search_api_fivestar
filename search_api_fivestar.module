@@ -83,7 +83,7 @@ function search_api_fivestar_menu() {
 }
 
 /**
- * Implements hook_admin_form().
+ * Custom administration form.
  */
 function search_api_fivestar_admin_form($form, &$form_state) {
   $indexes['indexes'] = search_api_index_options_list();
