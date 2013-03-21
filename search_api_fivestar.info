@@ -5,3 +5,5 @@ package = Search API Fivestar
 
 dependencies[] = voting_rules
 dependencies[] = fivestar
+dependencies[] = search_api
+
