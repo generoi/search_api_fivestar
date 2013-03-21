@@ -72,8 +72,8 @@ function search_api_fivestar_menu() {
   $items = array();
   // Management page.
   $items['admin/config/search/search_api_fivestar'] = array(
-    'title'             => 'Voting API Fivestar',
-    'description'       => 'Configuration for the Voting API Fivestar module',
+    'title'             => 'Search API Fivestar',
+    'description'       => 'Configuration for the Search API Fivestar module',
     'page callback'     => 'drupal_get_form',
     'page arguments'    => array('search_api_fivestar_admin_form'),
     'access arguments'  => array('administer modules'),
@@ -128,7 +128,7 @@ function search_api_fivestar_admin_form($form, &$form_state) {
 }
 
 /**
- * Save configuration settings for Voting API Fivestar module.
+ * Save configuration settings for Search API Fivestar module.
  */
 function search_api_fivestar_admin_form_submit($form, &$form_state) {
   // Save vars.
