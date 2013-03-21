@@ -10,7 +10,7 @@
 function search_api_fivestar_default_rules_configuration() {
   $index = variable_get('search_api_fivestar_rating_index');
   $items = array();
-  $items['rules_og_member_active'] = entity_import('rules_config', '{ "rules_vote_is_cast" : {
+  $items['rules_vote_is_cast'] = entity_import('rules_config', '{ "rules_vote_is_cast" : {
     "LABEL" : "Vote is cast",
     "ACTIVE" : true,
     "PLUGIN" : "reaction rule",
