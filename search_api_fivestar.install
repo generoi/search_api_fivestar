@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * webform_event.install
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function webform_event_uninstall() {
+  variable_del('searchapi_fivestar_rating_index');
+  variable_del('searchapi_fivestar_rating_stars');
+}

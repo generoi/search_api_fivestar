@@ -1,0 +1,7 @@
+name = Search API Fivestar
+description = Enables correct indexing of Search api fivestar.
+core = 7.x
+package = Search API Fivestar
+
+dependencies[] = voting_rules
+dependencies[] = fivestar
