@@ -5,7 +5,7 @@
  */
 
 /**
- * Implementation of hook_default_rules_configuration().
+ * Implements hook_default_rules_configuration().
  */
 function search_api_fivestar_default_rules_configuration() {
   $index = variable_get('search_api_fivestar_rating_index');
