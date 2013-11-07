@@ -19,7 +19,6 @@ Provide facets with styling
 This is a D7 module.
 
 Dependencies:
-
-Voting Rules
-Search API
-Fivestar
+- Voting Rules
+- Search API
+- Fivestar
