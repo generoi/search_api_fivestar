@@ -5,6 +5,13 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function search_api_fivestar_install() {
+  variable_set('search_api_fivestar_rating_stars', 5);
+}
+
+/**
  * Implements hook_uninstall().
  */
 function search_api_fivestar_uninstall() {
