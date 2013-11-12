@@ -16,11 +16,11 @@ function search_api_fivestar_entity_property_info_alter(&$info) {
     'getter callback' => 'search_api_fivestar_current_user_rating_getter_callback',
   );
 
-  $info['node']['properties']['avarage_rating'] = array(
+  $info['node']['properties']['average_rating'] = array(
     'type' => 'text',
-    'label' => t('Fivestar - Avarage rating'),
+    'label' => t('Fivestar - Average rating'),
     'sanitized' => TRUE,
-    'getter callback' => 'search_api_fivestar_avarage_user_rating_getter_callback',
+    'getter callback' => 'search_api_fivestar_average_user_rating_getter_callback',
   );
 
   $info['node']['properties']['count_rating'] = array(
@@ -37,30 +37,39 @@ function search_api_fivestar_entity_property_info_alter(&$info) {
 function search_api_fivestar_current_user_rating_getter_callback($node, $entity) {
   $divisor = (100 / variable_get('search_api_fivestar_rating_stars'));
   $node_rating = fivestar_get_votes('node', $node->nid);
-  $user = $node_rating['user']['value'];
-  $actual = $user / $divisor;
+  $actual = "0";
+  if(isset($node_rating['user']['value']) && $node_rating['user']['value'] > 0) {
+    $user = $node_rating['user']['value'];
+    $actual = $user / $divisor;
+  }
 
   return $actual;
 }
 
 /**
- * Getter callback for avarage rating.
+ * Getter callback for average rating.
  */
-function search_api_fivestar_avarage_user_rating_getter_callback($node) {
+function search_api_fivestar_average_user_rating_getter_callback($node) {
   $divisor = (100 / variable_get('search_api_fivestar_rating_stars'));
+  $actual = 0;
   $node_rating = fivestar_get_votes('node', $node->nid);
-  $avarage = $node_rating['average']['value'];
-  $actual = $avarage / $divisor;
+  if(!empty($node_rating['average']['value']) && isset($node_rating['average']['value'])) {
+    $average = $node_rating['average']['value'];
+    $actual = $average / $divisor;
+  }
 
   return $actual;
 }
 
 /**
- * Getter callback for avarage rating.
+ * Getter callback for average rating.
  */
 function search_api_fivestar_count_rating_getter_callback($node) {
   $node_rating = fivestar_get_votes('node', $node->nid);
-  $actual = $node_rating['average']['value'];
+  $actual = 0;
+  if(!empty($node_rating['average']['value']) && isset($node_rating['average']['value'])) {
+    $actual = $node_rating['average']['value'];
+  }
 
   return $actual;
 }
@@ -79,6 +88,7 @@ function search_api_fivestar_menu() {
     'access arguments'  => array('administer modules'),
     'type'              => MENU_NORMAL_ITEM,
   );
+  
   return $items;
 }
 
