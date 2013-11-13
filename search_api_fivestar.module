@@ -67,8 +67,8 @@ function search_api_fivestar_average_user_rating_getter_callback($node) {
 function search_api_fivestar_count_rating_getter_callback($node) {
   $node_rating = fivestar_get_votes('node', $node->nid);
   $actual = 0;
-  if(!empty($node_rating['average']['value']) && isset($node_rating['average']['value'])) {
-    $actual = $node_rating['average']['value'];
+  if(!empty($node_rating['count']['value']) && isset($node_rating['count']['value'])) {
+    $actual = $node_rating['count']['value'];
   }
 
   return $actual;
