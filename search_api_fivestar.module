@@ -6,6 +6,84 @@
  */
 
 /**
+ * Implements hook_facetapi_widgets().
+ */
+function search_api_fivestar_facetapi_widgets() {
+  $widgets['search_api_fivestar_stars'] = array(
+    'handler' => array(
+      'label' => t('Fivestar: Stars'),
+      'class' => 'SearchApiFivestarWidgetStars',
+      'query types' => array('term'),
+    ),
+  );
+  if (module_exists('search_api_ranges')) {
+    $widgets['search_api_fivestar_range_stars'] = array(
+      'handler' => array(
+        'label' => t('Fivestar: Range Stars'),
+        'class' => 'SearchApiFivestarWidgetRangeStars',
+        'query types' => array('term'),
+      ),
+    );
+  }
+  return $widgets;
+}
+
+/**
+ * Implements hook_facetapi_facet_info().
+ */
+function search_api_fivestar_facetapi_facet_info_alter(array &$facet_info, array $searcher_info) {
+  if (module_exists('search_api_ranges')) {
+    $adapter = facetapi_adapter_load($searcher_info['name']);
+    foreach ($facet_info as &$facet) {
+      $facet_settings = $adapter->getFacet($facet)->getSettings('block');
+
+      if (isset($facet_settings->settings['widget'])) {
+        switch ($facet_settings->settings['widget']) {
+          case 'search_api_fivestar_range_stars':
+            $facet['map options']['map callback'] = 'search_api_ranges_map_label';
+            break;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function search_api_fivestar_theme() {
+  return array(
+    'search_api_fivestar_facetapi_link_inactive' => array(
+      'variables' => array(
+        'text' => NULL,
+        'prefix' => NULL,
+        'suffix' => NULL,
+        'path' => NULL,
+        'options' => array(),
+        'count' => 0,
+        'rating' => 0,
+        'widget' => array(),
+        'stars' => NULL,
+      ),
+      'file' => 'search_api_fivestar.theme.inc',
+    ),
+    'search_api_fivestar_facetapi_link_active' => array(
+      'variables' => array(
+        'text' => NULL,
+        'prefix' => NULL,
+        'suffix' => NULL,
+        'path' => NULL,
+        'options' => array(),
+        'rating' => 0,
+        'widget' => array(),
+        'stars' => NULL,
+      ),
+      'file' => 'search_api_fivestar.theme.inc',
+    ),
+  );
+}
+
+/**
  * Implements hook_entity_property_info_alter().
  */
 function search_api_fivestar_entity_property_info_alter(&$info) {

@@ -6,3 +6,5 @@ package = Search API Fivestar
 dependencies[] = voting_rules
 dependencies[] = fivestar
 dependencies[] = search_api
+files[] = plugins/facetapi/widget_stars.inc
+files[] = plugins/facetapi/widget_range_stars.inc
