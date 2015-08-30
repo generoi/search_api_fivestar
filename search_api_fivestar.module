@@ -166,7 +166,7 @@ function search_api_fivestar_menu() {
     'access arguments'  => array('administer modules'),
     'type'              => MENU_NORMAL_ITEM,
   );
-  
+
   return $items;
 }
 

@@ -25,8 +25,11 @@ class SearchApiFivestarWidgetRangeStars extends SearchApiFivestarWidgetStars {
     );
     $stars = variable_get('search_api_fivestar_rating_stars');
 
+    // Fetch the real star data, and not the range bundles.
     $values = array_keys($element);
     $values = array_filter($values, 'is_numeric');
+
+    // Figure out the max and minimum star rating available.
     sort($values, SORT_NUMERIC);
     $min_all = $values[0];
     $max_all = $values[count($values) - 1];
@@ -54,6 +57,7 @@ class SearchApiFivestarWidgetRangeStars extends SearchApiFivestarWidgetStars {
     }
     $element = $tmp_element;
 
+    // Create range bundles.
     if (strlen($settings['range_advanced']) > 0) {
       // Get Search API stuff.
       $searcher = $this->facet->getAdapter()->getSearcher();
@@ -75,14 +79,17 @@ class SearchApiFivestarWidgetRangeStars extends SearchApiFivestarWidgetStars {
     }
 
     foreach ($element as $value => &$item) {
+      // It's a range bundle
       if (strpos($value, '-') !== FALSE) {
         list($from, $to) = explode('-', $value);
         $from = (int) $from;
         $to = (int) $to;
       }
+      // Regular item
       else {
         $from = (int) $value;
       }
+
       $item['#rating'] = $from;
       $item['#widget'] = $fivestar_widget;
       $item['#stars'] = $stars;
@@ -93,13 +100,16 @@ class SearchApiFivestarWidgetRangeStars extends SearchApiFivestarWidgetStars {
         $item['#active'] = 1;
       }
 
-      // search_api_ranges doesn't take global item limit into account, fix it.
+      // honor active item limit
       if ($global_settings->settings['limit_active_items']) {
+        // remove all earlier queries for this facet.
         foreach ($item['#query']['f'] as $idx => $filter) {
           if (0 === strpos($filter, $this->facet['field alias'])) {
             unset($item['#query']['f'][$idx]);
           }
         }
+        // unless active (when the query should be removed) reapply the current
+        // items query.
         if (!$item['#active']) {
           $filter = isset($to) ? "[$from TO $to]" : $from;
           $item['#query']['f'][] = urlencode($this->facet['field alias']) . ':' . $filter;
